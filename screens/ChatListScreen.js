@@ -43,7 +43,10 @@ export default function ChatListScreen({ navigation }) {
   };
 
   const renderChatItem = ({ item }) => (
-    <TouchableOpacity style={styles.chatItem}>
+    <TouchableOpacity
+      style={styles.chatItem}
+      onPress={() => navigation.navigate('DirectChat', { chatId: item.id, chatName: item.name })}
+    >
       <View style={styles.avatar}>
         <Text style={styles.avatarText}>{item.name.charAt(0)}</Text>
       </View>

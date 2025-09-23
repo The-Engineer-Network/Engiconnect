@@ -24,6 +24,15 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow ENGIConnect to access your photos",
+          "cameraPermission": "Allow ENGIConnect to access your camera"
+        }
+      ]
+    ]
   }
 }

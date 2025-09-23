@@ -2,11 +2,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import LandingScreen from './screens/LandingScreen';
 import OnboardingScreen from './screens/OnboardingScreen';
 import ChatListScreen from './screens/ChatListScreen';
 import CommunitiesScreen from './screens/CommunitiesScreen';
 import ProfileScreen from './screens/ProfileScreen';
+import DirectChatScreen from './screens/DirectChatScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -46,17 +48,20 @@ function MainTabs() {
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName="Landing"
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen name="Landing" component={LandingScreen} />
-        <Stack.Screen name="Onboarding" component={OnboardingScreen} />
-        <Stack.Screen name="Main" component={MainTabs} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="Landing"
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name="Landing" component={LandingScreen} />
+          <Stack.Screen name="Onboarding" component={OnboardingScreen} />
+          <Stack.Screen name="Main" component={MainTabs} />
+          <Stack.Screen name="DirectChat" component={DirectChatScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </GestureHandlerRootView>
   );
 }
