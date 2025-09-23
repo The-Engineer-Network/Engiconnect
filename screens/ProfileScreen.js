@@ -3,11 +3,13 @@ import { Text, View, ScrollView, TouchableOpacity, StyleSheet, Switch } from 're
 import { LinearGradient } from 'expo-linear-gradient';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import { useEffect, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 
 export default function ProfileScreen() {
   const [stealthMode, setStealthMode] = useState(false);
   const [notifications, setNotifications] = useState(true);
   const [theme, setTheme] = useState('dark');
+  const navigation = useNavigation();
 
   const fadeAnim = useSharedValue(0);
 
@@ -51,6 +53,22 @@ export default function ProfileScreen() {
           <TouchableOpacity style={styles.settingItem}>
             <Text style={styles.settingText}>Linked Wallets</Text>
             <Text style={styles.settingValue}>2 connected</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.settingItem}
+            onPress={() => navigation.navigate('Monetization')}
+          >
+            <Text style={styles.settingText}>Monetization Board</Text>
+            <Text style={styles.settingValue}>></Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.settingItem}
+            onPress={() => navigation.navigate('DAODashboard')}
+          >
+            <Text style={styles.settingText}>DAO Dashboard</Text>
+            <Text style={styles.settingValue}>></Text>
           </TouchableOpacity>
         </View>
 

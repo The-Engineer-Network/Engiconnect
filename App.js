@@ -9,6 +9,8 @@ import ChatListScreen from './screens/ChatListScreen';
 import CommunitiesScreen from './screens/CommunitiesScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import DirectChatScreen from './screens/DirectChatScreen';
+import MonetizationScreen from './screens/MonetizationScreen';
+import DAODashboardScreen from './screens/DAODashboardScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -60,6 +62,8 @@ export default function App() {
           <Stack.Screen name="Onboarding" component={OnboardingScreen} />
           <Stack.Screen name="Main" component={MainTabs} />
           <Stack.Screen name="DirectChat" component={DirectChatScreen} />
+          <Stack.Screen name="Monetization" component={MonetizationScreen} />
+          <Stack.Screen name="DAODashboard" component={DAODashboardScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>
