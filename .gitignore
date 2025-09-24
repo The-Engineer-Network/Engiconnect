@@ -42,3 +42,6 @@ yarn-error.*
 
 # ignore env files
 .env
+
+# ignore test files
+backend-test/

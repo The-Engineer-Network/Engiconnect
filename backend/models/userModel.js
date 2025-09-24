@@ -4,14 +4,20 @@ const getAllUsers = async () => {
   return await supabase.from("users").select("*");
 };
 
-const createUser = async (userWalledData) => {
-  return await supabase.from("users").insert([userWalledData]);
+const createUser = async (wallet) => {
+
+   const { data, error } = await supabase
+    .from("users")
+    .insert([{ wallet_address: wallet}])
+    .select()
+    .single();
+  return {data, error}
 };
-const getUserByWallet = async(email)=>{
+const getUserByWallet = async(wallet)=>{
      const { data: user, error } = await supabase
     .from("users")
     .select("*")
-    .eq("email", email)
+    .eq("wallet_address", wallet)
     .single(); // gets a single row
     return {user, error}
 }
