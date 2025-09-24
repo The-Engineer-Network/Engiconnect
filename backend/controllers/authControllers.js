@@ -29,13 +29,15 @@ const loginController = async (req, res, next) => {
 			return res.status(401).json({error: "Signature does not match wallet"});
 		}
 
-		const access_token = jwt.sign({wallet_address}, process.env.JWT_SECRET, {
+		const access_token = jwt.sign({wallet_address, sub: user.id, permissions: ["read", "write", "admin"]}, process.env.JWT_SECRET, {
 			expiresIn: "1h",
 		});
 
-		const refresh_token = jwt.sign({wallet_address}, process.env.JWT_SECRET, {
+		const refresh_token = jwt.sign({wallet_address, sub: user.id, permissions: ["read", "write", "admin"]}, process.env.JWT_SECRET, {
 			expiresIn: "7d",
 		});
+		{
+		}
 
 		return res.status(200).json({
 			message: "Login successful",
@@ -63,8 +65,13 @@ const refreshController = async (req, res, next) => {
 		// Verify refresh token
 		const decoded = jwt.verify(refresh_token, process.env.JWT_SECRET);
 
+		const {user, error} = await getUserByWallet(decoded.wallet_address);
+		
+		if (error) {
+			return res.status(400).json({NOT_FOUND: "user does not exist"});
+		}
 		// Issue a new access token
-		const newAccessToken = jwt.sign({wallet: decoded.wallet}, process.env.JWT_SECRET, {expiresIn: "1h"});
+		const newAccessToken = jwt.sign({wallet: decoded.wallet_address, sub: user.id, permissions: ["read", "write", "admin"]}, process.env.JWT_SECRET, {expiresIn: "1h"});
 
 		return res.status(200).json({
 			access_token: newAccessToken,
@@ -95,9 +102,6 @@ const verifyEnsController = async (req, res, next) => {
 		// 2. Recover address from signature
 		const recovered = ethers.verifyMessage(message, signature);
 
-		console.log("ENS domain:", domain);
-		console.log("Resolved address:", resolvedAddress);
-		console.log("Recovered signer:", recovered);
 
 		if (recovered.toLowerCase() !== resolvedAddress.toLowerCase()) {
 			return res.status(401).json({error: "Signature does not match ENS owner"});
