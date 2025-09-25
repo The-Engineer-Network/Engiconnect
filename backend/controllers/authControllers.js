@@ -66,7 +66,7 @@ const refreshController = async (req, res, next) => {
 		const decoded = jwt.verify(refresh_token, process.env.JWT_SECRET);
 
 		const {user, error} = await getUserByWallet(decoded.wallet_address);
-		
+
 		if (error) {
 			return res.status(400).json({NOT_FOUND: "user does not exist"});
 		}
@@ -101,7 +101,6 @@ const verifyEnsController = async (req, res, next) => {
 
 		// 2. Recover address from signature
 		const recovered = ethers.verifyMessage(message, signature);
-
 
 		if (recovered.toLowerCase() !== resolvedAddress.toLowerCase()) {
 			return res.status(401).json({error: "Signature does not match ENS owner"});
