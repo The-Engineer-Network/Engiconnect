@@ -39,3 +39,9 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# ignore env files
+.env
+
+# ignore test files
+backend-test/
